@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class TurnManager : MonoBehaviour
 {
     public TurnManager Instance;
+    private static int currentTurn = 0;
 
     // Attach a function to this action to run when there's a new turn
     public static UnityAction NewTurn;
@@ -25,6 +26,8 @@ public class TurnManager : MonoBehaviour
         if (NewTurn != null)
         {
             NewTurn.Invoke();
+            currentTurn++;
+            Debug.Log($"Turn {currentTurn} has started.");
         }
     }
 }

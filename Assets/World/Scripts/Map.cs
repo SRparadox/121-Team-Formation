@@ -17,13 +17,15 @@ public class Map : MonoBehaviour
     public Dictionary<Vector3Int, Cell> TilledCells;
     public Dictionary<Vector3Int, Cell> GroundCells;
 
+    public List<Plant> plants;
+
     // Start is called before the first frame update
     void Start()
     {
         grid = GetComponent<Grid>();
         InitalizeCells();
 
-        TurnManager.NewTurn += GiveCellResources;
+        TurnManager.NewTurn += OnNewTurn;
     }
 
     // Assign cell dictionaries based on tilemaps
@@ -61,6 +63,20 @@ public class Map : MonoBehaviour
         }
     }
 
+    public void UpdatePlants()
+    {
+        foreach (Plant plant in plants)
+        {
+            plant.CheckGrowthConditions();
+        }
+    }
+
+    public void OnNewTurn()
+    {
+        UpdatePlants();
+        GiveCellResources();
+    }
+
     public Cell GetCell(Vector3Int coord)
     {
         return GroundCells[coord];
@@ -84,6 +100,24 @@ public class Map : MonoBehaviour
     public bool IsGroundCell(Vector3Int coord)
     {
         return GroundCells.ContainsKey(coord);
+    }
+
+    // Push a plant to map
+    public void AddPlant(Plant plant)
+    {
+        plants.Add(plant);
+        Debug.Log($"Plant {plant.GetName()} has been planted");
+    }
+
+    public List<Vector3Int> GetNeighbors(Vector3Int position)
+    {
+        return new List<Vector3Int>
+    {
+        position + new Vector3Int(1, 0, 0),
+        position + new Vector3Int(-1, 0, 0),
+        position + new Vector3Int(0, 1, 0),
+        position + new Vector3Int(0, -1, 0)
+    };
     }
 
     public bool CreateTile(Vector3Int coord)
@@ -123,6 +157,7 @@ public class Cell
 {
     private float waterLevel;
     private float sunLevel = 0;
+    private Plant plant;
 
     public float GetWater()
     {
@@ -134,6 +169,11 @@ public class Cell
         return sunLevel;
     }
 
+    public Plant GetPlant()
+    {
+        return plant;
+    }
+
     public void AddWater(float value)
     {
         waterLevel += value;
@@ -142,6 +182,11 @@ public class Cell
     public void SetSun(float value)
     {
         sunLevel = value;
+    }
+
+    public void SetPlant(Plant plant)
+    {
+        this.plant = plant;
     }
 
     public override string ToString()

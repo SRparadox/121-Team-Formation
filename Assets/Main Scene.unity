@@ -153,6 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 742066921}
+  plantPrefab: {fileID: 1312555987459805479, guid: ac6a1ff7a047cbb4d845b7bdf3ee2c2b, type: 3}
+  plantDatas:
+  - {fileID: 11400000, guid: 51deb6f4dc29a3c49a147d804f7b5060, type: 2}
+  - {fileID: 11400000, guid: 8d45f083cf11fbf4fb7ee9f36e7628e1, type: 2}
+  - {fileID: 11400000, guid: 921573f2f29ce2144bd97cdecd813fae, type: 2}
+  - {fileID: 11400000, guid: 46c51292bea4bad4280d09ef1203bc0b, type: 2}
   type: 0
   maxSpeed: 5
   doLerpSmoothing: 1
@@ -1974,8 +1980,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 456010276}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.24999994, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2292,6 +2298,7 @@ MonoBehaviour:
   tilledTilemap: {fileID: 424257967}
   groundTilemap: {fileID: 1918176071}
   hillTilemap: {fileID: 1068968338}
+  plants: []
 --- !u!1 &866327972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2867,7 +2874,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3238,16 +3245,16 @@ Tilemap:
   - m_RefCount: 85
     m_Data: {fileID: 11400000, guid: e3863418c86d09142964a248d948a1f5, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: -355540836, guid: 51ab635a6cbc8384cb440eb381ac7474, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: -1922334122, guid: 51ab635a6cbc8384cb440eb381ac7474, type: 3}
   - m_RefCount: 7
     m_Data: {fileID: 1644640932, guid: 51ab635a6cbc8384cb440eb381ac7474, type: 3}
   - m_RefCount: 7
     m_Data: {fileID: 1825867042, guid: 51ab635a6cbc8384cb440eb381ac7474, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -355540836, guid: 51ab635a6cbc8384cb440eb381ac7474, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -485166156, guid: 51ab635a6cbc8384cb440eb381ac7474, type: 3}
   - m_RefCount: 4

@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Object References")]
     [SerializeField] Map map;
+    [SerializeField] GameObject plantPrefab;  
+    [SerializeField] List<PlantData> plantDatas;
     private Rigidbody2D rb;
 
     private enum MovementType { Grid , Free };
@@ -23,10 +25,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _targetPos;
     private Vector3Int _prevDirection;
     private float _speed;
+    private int moveCount = 1;
 
+    const int MOVES_PER_TURN = 3;
     const float MIN_DIST = 0.001f;
     const float DEADZONE = 0.5f;
-
+    
     public UnityAction<Vector3Int> PlayerMoved;
 
     // Start is called before the first frame update
@@ -34,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        PlayerMoved += _ => TurnManager.NextTurn();
+        PlayerMoved += HandleTurns;
 
         _targetPos = transform.position;
     }
@@ -44,6 +48,12 @@ public class PlayerMovement : MonoBehaviour
     {
         SetInputDirection();
         UpdateMove();
+
+        // Planting mechanic (using "P" key for planting for now)
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PlantAtCurrentCell();
+        }
     }
 
     private void SetInputDirection()
@@ -108,6 +118,18 @@ public class PlayerMovement : MonoBehaviour
         MoveTarget(direction);
     }
 
+    // New turn begins after a certain number of moves occur
+    private void HandleTurns(Vector3Int direction)
+    {
+        moveCount++;
+
+        if (moveCount >= MOVES_PER_TURN)
+        {
+            TurnManager.NextTurn();
+            moveCount = 0;
+        }
+    }
+
     private void MoveTarget(Vector3Int direction)
     {
         if (direction == Vector3Int.zero || !map.IsGroundCell(_targetCell + direction))
@@ -125,6 +147,29 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Debug.Log(map.GetCell(_targetCell));
+    }
+
+    // Handle planting
+    private void PlantAtCurrentCell()
+    {
+        // Check if the current cell is a valid tilled cell and is not already occupied by a plant
+        if (map.TilledCells.ContainsKey(_targetCell) && map.GetCell(_targetCell).GetPlant() == null)
+        {
+            // Instantiate the plant at the target position
+            Plant newPlant = Instantiate(plantPrefab, map.CellCoordToPos(_targetCell), Quaternion.identity).GetComponent<Plant>();
+            PlantData randomPlantData = plantDatas[Random.Range(0, plantDatas.Count)]; // right now a random plant type is selected. probably change this
+            newPlant.Initialize(map.GetCell(_targetCell), map, randomPlantData);
+
+            map.AddPlant(newPlant);
+
+            map.GetCell(_targetCell).SetPlant(newPlant);
+
+            Debug.Log("Plant planted at " + _targetCell);
+        }
+        else
+        {
+            Debug.Log("Cannot plant here! Either the cell is occupied or invalid.");
+        }
     }
 
     private Vector3 GetTargetPosition()

@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI scoreDisplay;
     [SerializeField] public TextMeshProUGUI resultsDisplay;
 
+    const int WIN_CONDITION = 10;
+
 
     private int harvested = 0;
     private int currentDay = 0;
@@ -91,7 +93,7 @@ public class UIManager : MonoBehaviour
         GameOverPanel.gameObject.SetActive(true);
         scoreDisplay.text = $"You harvested {score} crops!";
 
-        if (score > 10)
+        if (score > WIN_CONDITION)
         {
             scoreDisplay.text = "A Great Harvest!! You Won !!!";
             

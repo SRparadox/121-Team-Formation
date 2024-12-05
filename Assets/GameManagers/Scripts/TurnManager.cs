@@ -10,6 +10,7 @@ public class TurnManager : MonoBehaviour
 
     // Attach a function to this action to run when there's a new turn
     public static UnityAction NewTurn;
+    public static UnityAction EndGame;
 
     // Start is called before the first frame update
     void Awake()
@@ -18,6 +19,7 @@ public class TurnManager : MonoBehaviour
         {
             Instance = this;
         }
+
     }
 
     // Call to trigger a new turn
@@ -28,6 +30,17 @@ public class TurnManager : MonoBehaviour
             NewTurn.Invoke();
             currentTurn++;
             Debug.Log($"Turn {currentTurn} has started.");
+            UIManager.Instance.UpdateDay(currentTurn);
+        }
+
+        if (currentTurn == 31)
+        {
+            Debug.Log("Turn 31 reached. Ending game...");
+            if (EndGame != null)
+            {
+                EndGame.Invoke();
+            }
         }
     }
+
 }

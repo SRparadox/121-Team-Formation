@@ -26,10 +26,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3Int _prevDirection;
     private float _speed;
     private int moveCount = 1;
+    private int harvested = 0;
 
     const int MOVES_PER_TURN = 3;
     const float MIN_DIST = 0.001f;
     const float DEADZONE = 0.5f;
+
+    private bool gameActive = true;
     
     public UnityAction<Vector3Int> PlayerMoved;
 
@@ -39,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         PlayerMoved += HandleTurns;
+        TurnManager.EndGame += OnGameEnd;
 
         _targetPos = transform.position;
     }
@@ -54,6 +58,12 @@ public class PlayerMovement : MonoBehaviour
         {
             PlantAtCurrentCell();
         }
+
+        // Sowing mechanic (using "O" key for sowing)
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SowAtCurrentCell();
+        }
     }
 
     private void SetInputDirection()
@@ -66,6 +76,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateMove()
     {
+        if (gameActive == false)
+        {
+            return;
+        }
+
         if (type == MovementType.Free)
         {
             rb.velocity = doLerpSmoothing ?
@@ -145,11 +160,10 @@ public class PlayerMovement : MonoBehaviour
             _prevDirection = direction;
             PlayerMoved.Invoke(direction);
         }
-
-        Debug.Log(map.GetCell(_targetCell));
+        UIManager.Instance.UpdateCurrentCell(map.GetCell(_targetCell));
     }
 
-    // Handle planting
+    // Handle planting and Sowing
     private void PlantAtCurrentCell()
     {
         // Check if the current cell is a valid tilled cell and is not already occupied by a plant
@@ -157,19 +171,59 @@ public class PlayerMovement : MonoBehaviour
         {
             // Instantiate the plant at the target position
             Plant newPlant = Instantiate(plantPrefab, map.CellCoordToPos(_targetCell), Quaternion.identity).GetComponent<Plant>();
-            PlantData randomPlantData = plantDatas[Random.Range(0, plantDatas.Count)]; // right now a random plant type is selected. probably change this
+            PlantData randomPlantData = plantDatas[Random.Range(0, plantDatas.Count)]; // right now a random plant type is selected. might update this
             newPlant.Initialize(map.GetCell(_targetCell), map, randomPlantData);
 
             map.AddPlant(newPlant);
 
             map.GetCell(_targetCell).SetPlant(newPlant);
 
-            Debug.Log("Plant planted at " + _targetCell);
+            UIManager.Instance.UpdateCurrentCell(map.GetCell(_targetCell));
         }
         else
         {
             Debug.Log("Cannot plant here! Either the cell is occupied or invalid.");
         }
+    }
+
+    private void SowAtCurrentCell()
+    {
+        // Check if the current cell has a plant and if it is fully grown
+        if (map.TilledCells.ContainsKey(_targetCell) && map.GetCell(_targetCell).GetPlant() != null)
+        {
+            Plant plant = map.GetCell(_targetCell).GetPlant();
+
+            if (plant.IsFullyGrown())
+            {
+                // harvestScore += plant.GetScoreValue(); // if we want plants to have different score values
+                harvested += 1;
+
+                // update ui
+                UIManager.Instance.UpdateScore(harvested);
+
+                // remove the plant from the map and cell
+                map.plants.Remove(plant);
+                map.GetCell(_targetCell).SetPlant(null);
+                Destroy(plant.gameObject); // could definitely change to handle w pooling
+
+                Debug.Log($"Sowed {plant.GetName()}. Score: {harvested}");
+            }
+            else
+            {
+                Debug.Log("Plant is not fully grown yet!");
+            }
+        }
+        else
+        {
+            Debug.Log("No plant to sow here!");
+        }
+    }
+
+    public void OnGameEnd()
+    {
+        UIManager.Instance.EnableGameOverUI(harvested);
+
+        gameActive = false;
     }
 
     private Vector3 GetTargetPosition()

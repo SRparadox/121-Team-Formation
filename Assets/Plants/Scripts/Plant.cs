@@ -61,9 +61,11 @@ public class Plant : MonoBehaviour
         }
 
         //testing
+        /*
         Debug.Log($"water threshold: {water >= plantData.minWater}");
         Debug.Log($"sun threshold: {sun >= plantData.minSun}");
         Debug.Log($"valid neighbors?: {CheckValidNeighbors()}");
+        */
     }
 
     private void Grow()
@@ -73,6 +75,11 @@ public class Plant : MonoBehaviour
             currentStage++;
             UpdatePlantVisual();
         }
+    }
+
+    public bool IsFullyGrown()
+    {
+        return currentStage == GROWTH_STAGES;
     }
 
     private void UpdatePlantVisual()

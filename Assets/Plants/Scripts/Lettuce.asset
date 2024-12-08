@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fe1d474026f4844b9275b97e81b7ffd, type: 3}
-  m_Name: LettuceData
+  m_Name: Lettuce
   m_EditorClassIdentifier: 
   plantName: Lettuce
   minWater: 5
-  minSun: 1.5
+  minSun: 0
+  minTotalNeighbors: 2
+  minSpecificNeighbors: 0
   preferredNeighborPlants:
-  - Parsnip
+  - Lettuce, Cucumber, Parsnip
+  requiredNeighborPlants:
+  - Lettuce
   plantSprites:
   - {fileID: -1620127056, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
   - {fileID: -1936188936, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}

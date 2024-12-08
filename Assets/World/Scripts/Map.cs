@@ -77,6 +77,8 @@ public class Map : MonoBehaviour
         GiveCellResources();
     }
 
+    // Utilities
+
     public Cell GetCell(Vector3Int coord)
     {
         return GroundCells[coord];

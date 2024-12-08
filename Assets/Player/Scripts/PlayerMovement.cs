@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
@@ -39,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LoadAllPlantData(); // generate list of all valid plant types at start
+
         rb = GetComponent<Rigidbody2D>();
 
         PlayerMoved += HandleTurns;
@@ -59,10 +62,10 @@ public class PlayerMovement : MonoBehaviour
             PlantAtCurrentCell();
         }
 
-        // Sowing mechanic (using "O" key for sowing)
+        // Reaping mechanic (using "O" key for reaping)
         if (Input.GetKeyDown(KeyCode.O))
         {
-            SowAtCurrentCell();
+            HarvestAtCurrentCell();
         }
     }
 
@@ -109,30 +112,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void HandleGridInputs()
-    {
-        // Check for Inputs
-        Vector3Int direction = Vector3Int.zero;
-        if (Mathf.Abs(_inputDir.x) > DEADZONE)
-        {
-            direction += Vector3Int.right * (int)Mathf.Sign(_inputDir.x);
-        }
-        if (Mathf.Abs(_inputDir.y) > DEADZONE)
-        {
-            direction += Vector3Int.up * (int)Mathf.Sign(_inputDir.y);
-        }
-
-        // If both axis are pressed
-        if (direction.magnitude > 1f)
-        {
-            // Prioritize the other axis
-            direction *= Mathf.Abs(_prevDirection.x) > DEADZONE ?
-                Vector3Int.up : Vector3Int.right;
-        }
-
-        MoveTarget(direction);
-    }
-
     // New turn begins after a certain number of moves occur
     private void HandleTurns(Vector3Int direction)
     {
@@ -163,7 +142,31 @@ public class PlayerMovement : MonoBehaviour
         UIManager.Instance.UpdateCurrentCell(map.GetCell(_targetCell));
     }
 
-    // Handle planting and Sowing
+    private void HandleGridInputs()
+    {
+        // Check for Inputs
+        Vector3Int direction = Vector3Int.zero;
+        if (Mathf.Abs(_inputDir.x) > DEADZONE)
+        {
+            direction += Vector3Int.right * (int)Mathf.Sign(_inputDir.x);
+        }
+        if (Mathf.Abs(_inputDir.y) > DEADZONE)
+        {
+            direction += Vector3Int.up * (int)Mathf.Sign(_inputDir.y);
+        }
+
+        // If both axis are pressed
+        if (direction.magnitude > 1f)
+        {
+            // Prioritize the other axis
+            direction *= Mathf.Abs(_prevDirection.x) > DEADZONE ?
+                Vector3Int.up : Vector3Int.right;
+        }
+
+        MoveTarget(direction);
+    }
+
+    // Handle planting and Reaping
     private void PlantAtCurrentCell()
     {
         // Check if the current cell is a valid tilled cell and is not already occupied by a plant
@@ -186,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void SowAtCurrentCell()
+    private void HarvestAtCurrentCell()
     {
         // Check if the current cell has a plant and if it is fully grown
         if (map.TilledCells.ContainsKey(_targetCell) && map.GetCell(_targetCell).GetPlant() != null)
@@ -206,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
                 map.GetCell(_targetCell).SetPlant(null);
                 Destroy(plant.gameObject); // could definitely change to handle w pooling
 
-                Debug.Log($"Sowed {plant.GetName()}. Score: {harvested}");
+                Debug.Log($"Reaped {plant.GetName()}. Score: {harvested}");
             }
             else
             {
@@ -215,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("No plant to sow here!");
+            Debug.Log("No plant to reap here!");
         }
     }
 
@@ -234,5 +237,25 @@ public class PlayerMovement : MonoBehaviour
     private bool IsMoving()
     {
         return (transform.position - _targetPos).magnitude > MIN_DIST;
+    }
+
+    void LoadAllPlantData()
+    {
+        // Find all PlantData assets in the project folder
+        string[] guids = AssetDatabase.FindAssets("t:PlantData", new[] { "Assets/Plants/Scripts" });
+
+        plantDatas.Clear();
+
+        // Loop through each GUID and load the corresponding asset
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            PlantData plantData = AssetDatabase.LoadAssetAtPath<PlantData>(path);
+
+            if (plantData != null)
+            {
+                plantDatas.Add(plantData); // Add the PlantData asset to the list
+            }
+        }
     }
 }

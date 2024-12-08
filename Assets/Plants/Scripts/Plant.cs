@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Plant : MonoBehaviour
 {
-    [SerializeField] PlantData plantData;
+    [SerializeField] public PlantData plantData;
     [SerializeField] Map map;
 
     private int currentStage;
@@ -21,6 +22,44 @@ public class Plant : MonoBehaviour
         UpdatePlantVisual();
     }
 
+    // INTERNAL DSL TESTING ZONE
+
+    public void CheckGrowthConditions()
+    {
+        Debug.Log("checking growth conditions");
+
+        var context = new GrowthContext
+        {
+            plant = this,
+            cell = cell,
+            neighborCells = GetNeighborCells()
+        };
+
+        if (plantData.CanGrow(context))
+        {
+            Grow();
+        }
+    }
+
+    private List<Cell> GetNeighborCells()
+    {
+        Vector3Int plantPosition = map.PosToCellCoord(transform.position);
+        List<Vector3Int> neighborPositions = map.GetNeighbors(plantPosition);
+
+        List<Cell> neighbors = new List<Cell>();
+        foreach (Vector3Int neighborPos in neighborPositions)
+        {
+            if (map.IsGroundCell(neighborPos))
+            {
+                neighbors.Add(map.GetCell(neighborPos));
+            }
+        }
+
+        return neighbors;
+    }
+
+
+    /*
     private bool CheckValidNeighbors()
     {
         Vector3Int plantPosition = map.PosToCellCoord(transform.position);
@@ -65,8 +104,9 @@ public class Plant : MonoBehaviour
         Debug.Log($"water threshold: {water >= plantData.minWater}");
         Debug.Log($"sun threshold: {sun >= plantData.minSun}");
         Debug.Log($"valid neighbors?: {CheckValidNeighbors()}");
-        */
-    }
+        
+    } 
+*/
 
     private void Grow()
     {

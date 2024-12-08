@@ -288,11 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 742066921}
   plantPrefab: {fileID: 1312555987459805479, guid: ac6a1ff7a047cbb4d845b7bdf3ee2c2b, type: 3}
-  plantDatas:
-  - {fileID: 11400000, guid: 51deb6f4dc29a3c49a147d804f7b5060, type: 2}
-  - {fileID: 11400000, guid: 8d45f083cf11fbf4fb7ee9f36e7628e1, type: 2}
-  - {fileID: 11400000, guid: 921573f2f29ce2144bd97cdecd813fae, type: 2}
-  - {fileID: 11400000, guid: 46c51292bea4bad4280d09ef1203bc0b, type: 2}
+  plantDatas: []
   type: 0
   maxSpeed: 5
   doLerpSmoothing: 1
@@ -2485,9 +2481,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.06660413
+    x: 0
     y: 0
-    width: 0.86720866
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -9512,7 +9508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1502868477
 RectTransform:
   m_ObjectHideFlags: 0

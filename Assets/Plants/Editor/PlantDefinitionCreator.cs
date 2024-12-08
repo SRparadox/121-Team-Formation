@@ -131,7 +131,7 @@ public static class PlantDefinitionCreator
             .PreferredNeighbors("Lettuce, Cucumber, Wheat, Parsnip")
             .MinimumTotalNeighbors(1)
             .Sprites(parsnipSprites)
-            .Build("Assets/Plants/Scripts/Parsnip.asset");
+            .Build("Assets/Resources/Plants/Parsnip.asset");
 
         // Lettuce Definition
         // Lettuce needs at least 1 lettuce neighbor, a total of 2 neighbors, and plenty of water
@@ -143,7 +143,7 @@ public static class PlantDefinitionCreator
             .RequiredNeighbors("Lettuce")
             .MinimumSpecificNeighbors(1)
             .Sprites(lettuceSprites)
-            .Build("Assets/Plants/Scripts/Lettuce.asset");
+            .Build("Assets/Resources/Plants/Lettuce.asset");
 
         // Wheat Definition
         // Wheat needs at least 2 wheat neighbors and moderate sun/water. The only other plant it is valid next to are Parsnips.
@@ -155,7 +155,7 @@ public static class PlantDefinitionCreator
             .RequiredNeighbors("Wheat")
             .MinimumSpecificNeighbors(2)
             .Sprites(wheatSprites)
-            .Build("Assets/Plants/Scripts/Wheat.asset");
+            .Build("Assets/Resources/Plants/Wheat.asset");
 
         // Cucumber Definition
         // Cucumber only needs lots of sun and water. It is valid next to any type of plant. 
@@ -165,7 +165,7 @@ public static class PlantDefinitionCreator
             .MinimumSun(1.7f)
             .PreferredNeighbors("Wheat, Parsnip, Cucumber, Lettuce")
             .Sprites(cucumberSprites)
-            .Build("Assets/Plants/Scripts/Cucumber.asset");
+            .Build("Assets/Resources/Plants/Cucumber.asset");
         
         Debug.Log("Plant definitions created!");
 

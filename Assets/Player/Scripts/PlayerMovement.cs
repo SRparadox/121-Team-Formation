@@ -8,11 +8,11 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Object References")]
     [SerializeField] Map map;
-    [SerializeField] GameObject plantPrefab;  
+    [SerializeField] GameObject plantPrefab;
     [SerializeField] List<PlantData> plantDatas;
     private Rigidbody2D rb;
 
-    private enum MovementType { Grid , Free };
+    private enum MovementType { Grid, Free };
     [Header("Movement Settings")]
     [SerializeField] private MovementType type;
 
@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     const float DEADZONE = 0.5f;
 
     private bool gameActive = true;
-    
+
     public UnityAction<Vector3Int> PlayerMoved;
 
     // Start is called before the first frame update
@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     private void SetInputDirection()
     {
         _inputDir = new Vector2(
-            Input.GetAxisRaw("Horizontal"), 
+            Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical"))
             .normalized;
     }
@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsMoving())
         {
-            _speed = doLerpSmoothing ? 
+            _speed = doLerpSmoothing ?
                 Mathf.Lerp(_speed, maxSpeed, lerpFactor * Time.deltaTime)
                 : maxSpeed;
 
@@ -241,21 +241,14 @@ public class PlayerMovement : MonoBehaviour
 
     void LoadAllPlantData()
     {
-        // Find all PlantData assets in the project folder
-        string[] guids = AssetDatabase.FindAssets("t:PlantData", new[] { "Assets/Plants/Scripts" });
-
         plantDatas.Clear();
 
-        // Loop through each GUID and load the corresponding asset
-        foreach (string guid in guids)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            PlantData plantData = AssetDatabase.LoadAssetAtPath<PlantData>(path);
+        // Load all PlantData assets from the Resources folder
+        PlantData[] loadedData = Resources.LoadAll<PlantData>("Plants");
 
-            if (plantData != null)
-            {
-                plantDatas.Add(plantData); // Add the PlantData asset to the list
-            }
+        foreach (var data in loadedData)
+        {
+            plantDatas.Add(data);
         }
     }
 }

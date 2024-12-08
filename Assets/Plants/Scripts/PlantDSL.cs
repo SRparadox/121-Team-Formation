@@ -81,12 +81,13 @@ public class PlantDSL
 
     public PlantData Build(string assetPath = null)
     {
+#if UNITY_EDITOR
         if (!string.IsNullOrEmpty(assetPath))
         {
             AssetDatabase.CreateAsset(plantData, assetPath);
             AssetDatabase.SaveAssets();
         }
-
+#endif
         return plantData;
     }
 }

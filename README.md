@@ -43,3 +43,20 @@ Our team is hoping to find ways to approach the assignment requirements creative
 ### Reflection
 
 Our team's outlook has changed quite a bit. We all became much more aware of how difficult it is to balance this project among several others and decided to cut back on scope as much as possible. Right now we are much more focused on simply fulfilling the requirements for everything rather than centering the story that we originally intended to express in this game. Regrettably, this does mean that some of our initial efforts were wasted on things that we will likely not end up able to implement. Moving forward we will concentrate on making our game's systems and mechanics functional and as polished as we are able. It is unfortunate, but depending on how much we can get done we may be able to reintroduce these things down the line. Beyond that, we've decided to continue using the tools and frameworks we are most comfortable with. Roles have kind of devolved and everyone is just contributing where they can. So far, Damon set up the level, imported assets, and established the grid, movement, turn, and basic resource mechanics. Anais handled implementing full plant design and functionality, UI, the play scenario, and writing this Devlog.
+
+## Devlog Entry 3 ( F1 )
+
+### How we satisfied the software requirements
+
+### Reflection
+
+## Devlog Entry 4 ( F2 )
+
+### How we satisfied the software requirements
+
+- F0 + F1:
+- Eternal DSL for Scenario Design :
+- Internal DSL for Plant Growth and Conditions :
+- Switch to Alternate Platform :
+
+### Reflection

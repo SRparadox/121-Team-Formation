@@ -174,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Instantiate the plant at the target position
             Plant newPlant = Instantiate(plantPrefab, map.CellCoordToPos(_targetCell), Quaternion.identity).GetComponent<Plant>();
-            PlantData randomPlantData = plantDatas[Random.Range(0, plantDatas.Count)]; // right now a random plant type is selected. might update this
+            PlantData randomPlantData = plantDatas[Random.Range(0, plantDatas.Count)]; // right now a random plant type is selected. might change this logic
             newPlant.Initialize(map.GetCell(_targetCell), map, randomPlantData);
 
             map.AddPlant(newPlant);

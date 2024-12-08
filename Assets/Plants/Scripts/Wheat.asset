@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe1d474026f4844b9275b97e81b7ffd, type: 3}
   m_Name: Wheat
   m_EditorClassIdentifier: 
-  plantName: Cucumber
-  minWater: 10
-  minSun: 1.7
+  plantName: Wheat
+  minWater: 2
+  minSun: 1.5
   minTotalNeighbors: 0
-  minSpecificNeighbors: 0
+  minSpecificNeighbors: 2
   preferredNeighborPlants:
-  - Wheat, Parsnip, Cucumber, Lettuce
-  requiredNeighborPlants: []
+  - Wheat, Parsnip
+  requiredNeighborPlants:
+  - Wheat
   plantSprites:
-  - {fileID: -1667263648, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
-  - {fileID: -428867273, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
-  - {fileID: 320645857, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
-  - {fileID: -144556986, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
+  - {fileID: 1598259668, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
+  - {fileID: -180035284, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
+  - {fileID: 1898922581, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
+  - {fileID: -1693972161, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}

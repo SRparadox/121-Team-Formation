@@ -122,9 +122,9 @@ public static class PlantDefinitionCreator
         };
 
         // Plant Definitions Go Here !! vv
-        // would like to update to have more complex conditions if possible
 
         // Parsnip Definition
+        // Parsnip needs one neighbor of any type to grow and a little water
         new PlantDSL()
             .Name("Parsnip")
             .MinimumWater(1.1f)
@@ -132,42 +132,41 @@ public static class PlantDefinitionCreator
             .MinimumTotalNeighbors(1)
             .Sprites(parsnipSprites)
             .Build("Assets/Plants/Scripts/Parsnip.asset");
-        // parsnip needs one neighbor of any type to grow and a little water
 
         // Lettuce Definition
+        // Lettuce needs at least 1 lettuce neighbor, a total of 2 neighbors, and plenty of water
         new PlantDSL()
             .Name("Lettuce")
             .MinimumWater(5f)
             .PreferredNeighbors("Lettuce, Cucumber, Parsnip")
             .MinimumTotalNeighbors(2)
-            .RequiredNeighborTypes("Lettuce")
+            .RequiredNeighbors("Lettuce")
+            .MinimumSpecificNeighbors(1)
             .Sprites(lettuceSprites)
             .Build("Assets/Plants/Scripts/Lettuce.asset");
 
-        // lettuce needs at least 1 lettuce neighbor, a total of 2 neighbors, and plenty of water
-
-        //Wheat Definition
+        // Wheat Definition
+        // Wheat needs at least 2 wheat neighbors and moderate sun/water. The only other plant it is valid next to are Parsnips.
         new PlantDSL()
             .Name("Wheat")
             .MinimumWater(2f)
             .MinimumSun(1.5f)
             .PreferredNeighbors("Wheat, Parsnip")
-            .RequiredNeighborTypes("Wheat")
-            .MinimumSpecificNeighbors(3)
+            .RequiredNeighbors("Wheat")
+            .MinimumSpecificNeighbors(2)
             .Sprites(wheatSprites)
             .Build("Assets/Plants/Scripts/Wheat.asset");
-        // wheat needs at least 3 wheat neighbors and moderate sun/water
 
-        //Cucumber Definition
+        // Cucumber Definition
+        // Cucumber only needs lots of sun and water. It is valid next to any type of plant. 
         new PlantDSL()
             .Name("Cucumber")
             .MinimumWater(10f)
             .MinimumSun(1.7f)
             .PreferredNeighbors("Wheat, Parsnip, Cucumber, Lettuce")
             .Sprites(cucumberSprites)
-            .Build("Assets/Plants/Scripts/Wheat.asset");
-        // cucumber only needs lots of sun and water
-
+            .Build("Assets/Plants/Scripts/Cucumber.asset");
+        
         Debug.Log("Plant definitions created!");
 
 

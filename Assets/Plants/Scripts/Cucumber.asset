@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe1d474026f4844b9275b97e81b7ffd, type: 3}
+  m_Name: Cucumber
+  m_EditorClassIdentifier: 
+  plantName: Cucumber
+  minWater: 10
+  minSun: 1.7
+  minTotalNeighbors: 0
+  minSpecificNeighbors: 0
+  preferredNeighborPlants:
+  - Wheat, Parsnip, Cucumber, Lettuce
+  requiredNeighborPlants: []
+  plantSprites:
+  - {fileID: -1667263648, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
+  - {fileID: -428867273, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
+  - {fileID: 320645857, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}
+  - {fileID: -144556986, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}

@@ -16,7 +16,7 @@ MonoBehaviour:
   minWater: 5
   minSun: 0
   minTotalNeighbors: 2
-  minSpecificNeighbors: 0
+  minSpecificNeighbors: 1
   preferredNeighborPlants:
   - Lettuce, Cucumber, Parsnip
   requiredNeighborPlants:

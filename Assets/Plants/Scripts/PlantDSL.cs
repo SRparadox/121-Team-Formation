@@ -49,7 +49,7 @@ public class PlantDSL
         return this;
     }
 
-    public PlantDSL RequiredNeighborTypes(params string[] neighbors)
+    public PlantDSL RequiredNeighbors(params string[] neighbors)
     {
         if (neighbors != null)
         {

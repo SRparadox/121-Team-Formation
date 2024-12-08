@@ -7,6 +7,7 @@ public class PlantData : ScriptableObject
     public string plantName;
     public float minWater = 0;
     public float minSun = 0;
+    // would like to update to have max water/sun as well
     public int minTotalNeighbors = 0;
     public int minSpecificNeighbors = 0;
 
@@ -15,10 +16,10 @@ public class PlantData : ScriptableObject
     public List<Sprite> plantSprites;
 
 
-    // checks dont all totally work yet. im too sleepy to figure out what i messed up with
+// checks are functional but sometimes difficult to fulfill. might need to tweak game logics
 public bool CanGrow(GrowthContext context)
 {
-    // Log all the values at the start of CanGrow
+    // Testing
     /*Debug.Log($"CanGrow Debug - Plant: {plantName}, " +
               $"Min Water: {minWater}, Min Sun: {minSun}, " +
               $"Min Total Neighbors: {minTotalNeighbors}, Min Specific Neighbors: {minSpecificNeighbors}, " +
@@ -32,31 +33,32 @@ public bool CanGrow(GrowthContext context)
     // Neighbor-related checks
     int requiredNeighborsCount = 0;
     bool validNeighbors = true;
-    int validNeighborCount = 0;
+
+    int neighborCount = 0;
 
     foreach (var neighbor in context.neighborCells)
     {
         if (neighbor != null && neighbor.GetPlant()?.plantData != null)
         {
-            validNeighborCount++;
+            neighborCount++;
 
             var neighborName = neighbor.GetPlant().plantData.plantName;
-                Debug.Log(neighborName);
+                Debug.Log($"neighbor: {neighborName}");
 
             if (requiredNeighborPlants.Contains(neighborName))
             {
                 requiredNeighborsCount++;
             }
 
-            if (preferredNeighborPlants.Contains(neighborName) || 
-                requiredNeighborPlants.Contains(neighborName))
-            {
-                validNeighbors = false;
+            if (!preferredNeighborPlants.Contains(neighborName) &&
+                !requiredNeighborPlants.Contains(neighborName))
+                {
+                    validNeighbors = false;
+                }
             }
-        }
     }
 
-    bool enoughNeighbors = validNeighborCount >= minTotalNeighbors;
+    bool enoughNeighbors = neighborCount >= minTotalNeighbors;
 
 
     bool enoughRequired = requiredNeighborsCount >= minSpecificNeighbors;
@@ -64,10 +66,12 @@ public bool CanGrow(GrowthContext context)
     // Final result
     bool canGrow = waterTrue && sunTrue && validNeighbors && enoughNeighbors && enoughRequired;
 
-        Debug.Log($"CanGrow Debug - Plant: {plantName}, " +
-                     $"Water: {waterTrue}, Sun: {sunTrue}, " +
-                     $"Valid Neighbors: {validNeighbors}, Enough Neighbors: {enoughNeighbors}, " +
-                     $"Enough Required: {enoughRequired}, Final Result: {canGrow}");
-        return canGrow;
+    // Testing
+    /*
+    Debug.Log($"CanGrow Debug - Plant: {plantName}, " +
+              $"Water: {waterTrue}, Sun: {sunTrue}, " +
+              $"Valid Neighbors: {validNeighbors}, Enough Neighbors: {enoughNeighbors}, " +
+              $"Enough Required: {enoughRequired}, Final Result: {canGrow}"); */
+    return canGrow;
 }
 }

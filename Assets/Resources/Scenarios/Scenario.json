@@ -1,0 +1,20 @@
+{
+    "ScenarioName": "Level 1",
+    "WeatherEvents":[
+        {
+            "Turn": 5,
+            "EventType": "Rain"
+        },
+        {
+            "Turn": 10,
+            "EventType": "Drought"
+        },
+        {
+            "Turn": 25,
+            "EventType": "Drought"
+        }
+    ],
+    "VictoryCondition": {
+        "Harvest" : 5
+    }
+}

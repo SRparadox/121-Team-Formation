@@ -12,67 +12,69 @@ public class PlantData : ScriptableObject
     public int minTotalNeighbors = 0;
     public int minSpecificNeighbors = 0;
 
-    public List<string> preferredNeighborPlants;
+    //public List<string> preferredNeighborPlants;
+    public List<string> invalidNeighborPlants;
     public List<string> requiredNeighborPlants;
     public List<Sprite> plantSprites;
 
-    // checks are functional but sometimes difficult to fulfill. might need to tweak game logics
     public bool CanGrow(GrowthContext context)
     {
-        // Testing
-        /*Debug.Log($"CanGrow Debug - Plant: {plantName}, " +
+        // Debugging setup
+        /* Debug.Log($"CanGrow Debug - Plant: {plantName}, " +
                   $"Min Water: {minWater}, Min Sun: {minSun}, " +
                   $"Min Total Neighbors: {minTotalNeighbors}, Min Specific Neighbors: {minSpecificNeighbors}, " +
-                  $"Preferred Neighbors: {string.Join(", ", preferredNeighborPlants)}, " +
-                  $"Required Neighbors: {string.Join(", ", requiredNeighborPlants)}");*/
+                  $"Invalid Neighbors: {string.Join(", ", invalidNeighborPlants)}, " +
+                  $"Required Neighbors: {string.Join(", ", requiredNeighborPlants)}"); */
 
-        // Check water and sun reqs
-        bool waterTrue = context.cell.GetWater() >= minWater;
-        bool sunTrue = context.cell.GetSun() >= minSun;
+        // Check water and sun requirements
+        float waterLevel = context.cell.GetWater();
+        float sunLevel = context.cell.GetSun();
+
+        bool waterValid = waterLevel >= minWater;
+        bool sunValid = sunLevel >= minSun;
 
         // Neighbor-related checks
         int requiredNeighborsCount = 0;
-        bool validNeighbors = true;
-
-        int neighborCount = 0;
+        int invalidNeighborsCount = 0;
+        int totalNeighborCount = 0;
 
         foreach (var neighbor in context.neighborCells)
         {
             if (neighbor != null && neighbor.GetPlant()?.plantData != null)
             {
-                neighborCount++;
+                totalNeighborCount++;
 
-                var neighborName = neighbor.GetPlant().plantData.plantName;
-                Debug.Log($"neighbor: {neighborName}");
+                string neighborName = neighbor.GetPlant().plantData.plantName;
 
+                // Count required neighbors
                 if (requiredNeighborPlants.Contains(neighborName))
                 {
                     requiredNeighborsCount++;
                 }
 
-                if (
-                    !preferredNeighborPlants.Contains(neighborName)
-                    && !requiredNeighborPlants.Contains(neighborName)
-                )
+                // Count invalid neighbors
+                if (invalidNeighborPlants.Contains(neighborName))
                 {
-                    validNeighbors = false;
+                    invalidNeighborsCount++;
                 }
             }
         }
 
-        bool enoughNeighbors = neighborCount >= minTotalNeighbors;
-
+        bool enoughNeighbors = totalNeighborCount >= minTotalNeighbors;
         bool enoughRequired = requiredNeighborsCount >= minSpecificNeighbors;
+        bool noInvalidNeighbors = invalidNeighborsCount == 0;
 
         // Final result
-        bool canGrow = waterTrue && sunTrue && validNeighbors && enoughNeighbors && enoughRequired;
+        bool canGrow = waterValid && sunValid && noInvalidNeighbors && enoughNeighbors && enoughRequired;
 
-        // Testing
-        /*
-        Debug.Log($"CanGrow Debug - Plant: {plantName}, " +
-                  $"Water: {waterTrue}, Sun: {sunTrue}, " +
-                  $"Valid Neighbors: {validNeighbors}, Enough Neighbors: {enoughNeighbors}, " +
-                  $"Enough Required: {enoughRequired}, Final Result: {canGrow}"); */
+        // Debugging output
+        /* Debug.Log($"CanGrow Debug - Plant: {plantName}, " +
+                  $"Water Valid: {waterValid}, Sun Valid: {sunValid}, " +
+                  $"No Invalid Neighbors: {noInvalidNeighbors} (Invalid Neighbors: {invalidNeighborsCount}), " +
+                  $"Enough Total Neighbors: {enoughNeighbors} (Total Neighbors: {totalNeighborCount}), " +
+                  $"Enough Required Neighbors: {enoughRequired} (Required Neighbors: {requiredNeighborsCount}), " +
+                  $"Final Result: {canGrow}"); */
+
         return canGrow;
     }
 }

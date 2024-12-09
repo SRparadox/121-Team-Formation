@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Cucumber
   m_EditorClassIdentifier: 
   plantName: Cucumber
-  minWater: 10
-  minSun: 1.7
+  minWater: 5
+  minSun: 1.5
   minTotalNeighbors: 0
   minSpecificNeighbors: 0
-  preferredNeighborPlants:
-  - Wheat, Parsnip, Cucumber, Lettuce
+  invalidNeighborPlants: []
   requiredNeighborPlants: []
   plantSprites:
   - {fileID: -1667263648, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}

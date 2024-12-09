@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Lettuce
   m_EditorClassIdentifier: 
   plantName: Lettuce
-  minWater: 5
+  minWater: 3
   minSun: 0
   minTotalNeighbors: 2
   minSpecificNeighbors: 1
-  preferredNeighborPlants:
-  - Lettuce, Cucumber, Parsnip
+  invalidNeighborPlants: []
   requiredNeighborPlants:
   - Lettuce
   plantSprites:

@@ -17,8 +17,7 @@ MonoBehaviour:
   minSun: 0
   minTotalNeighbors: 1
   minSpecificNeighbors: 0
-  preferredNeighborPlants:
-  - Lettuce, Cucumber, Wheat, Parsnip
+  invalidNeighborPlants: []
   requiredNeighborPlants: []
   plantSprites:
   - {fileID: -2144975387, guid: 617d95f0094b84148bd51947f966f9a3, type: 3}

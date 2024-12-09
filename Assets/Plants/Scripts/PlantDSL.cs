@@ -17,7 +17,7 @@ public class PlantDSL
         plantData.minSpecificNeighbors = 0;
 
         // Initialize lists to empty
-        plantData.preferredNeighborPlants = new List<string>();
+        plantData.invalidNeighborPlants = new List<string>();
         plantData.requiredNeighborPlants = new List<string>();
         plantData.plantSprites = new List<Sprite>();
     }
@@ -44,12 +44,22 @@ public class PlantDSL
     {
         if (neighbors != null)
         {
-            plantData.preferredNeighborPlants = new List<string>(neighbors);
+            //plantData.preferredNeighborPlants = new List<string>(neighbors);
         }
         return this;
     }
 
-    public PlantDSL RequiredNeighbors(params string[] neighbors)
+    public PlantDSL InvalidNeighbors(params string[] neighbors)
+    {
+        if (neighbors != null)
+        {
+            plantData.invalidNeighborPlants = new List<string>(neighbors);
+        }
+        return this;
+
+    }
+
+        public PlantDSL RequiredNeighbors(params string[] neighbors)
     {
         if (neighbors != null)
         {

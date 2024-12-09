@@ -17,8 +17,8 @@ MonoBehaviour:
   minSun: 1.5
   minTotalNeighbors: 0
   minSpecificNeighbors: 2
-  preferredNeighborPlants:
-  - Wheat, Parsnip
+  invalidNeighborPlants:
+  - Lettuce
   requiredNeighborPlants:
   - Wheat
   plantSprites:

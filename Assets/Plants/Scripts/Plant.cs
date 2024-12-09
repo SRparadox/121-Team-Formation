@@ -29,7 +29,7 @@ public class Plant : MonoBehaviour
 
     public void CheckGrowthConditions()
     {
-        Debug.Log("checking growth conditions");
+        // Debug.Log("checking growth conditions");
 
         var context = new GrowthContext
         {

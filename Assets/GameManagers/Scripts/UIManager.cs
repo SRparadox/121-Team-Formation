@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI scoreDisplay;
     [SerializeField] public TextMeshProUGUI resultsDisplay;
 
-    const int WIN_CONDITION = 10;
+    int WIN_CONDITION = 10;
 
 
     private int harvested = 0;
@@ -103,6 +103,11 @@ public class UIManager : MonoBehaviour
             resultsDisplay.text = "A Poor Harvest. You lost !!!";
         }
 
+    }
+
+    public void SetWinCondition(int score)
+    {
+        WIN_CONDITION = 5;
     }
 
 }

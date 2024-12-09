@@ -2,15 +2,15 @@
     "ScenarioName": "Level 1",
     "WeatherEvents":[
         {
-            "Turn": 5,
+            "Turn": 3,
             "EventType": "Rain"
         },
         {
-            "Turn": 10,
+            "Turn": 15,
             "EventType": "Drought"
         },
         {
-            "Turn": 25,
+            "Turn": 20,
             "EventType": "Drought"
         }
     ],

@@ -153,6 +153,29 @@ public class Map : MonoBehaviour
 
         return tiles;
     }
+
+    // Weather Events
+    public void OnRainTriggered()
+    {
+        Debug.Log("rained");
+        foreach (Cell cell in GroundCells.Values)
+        {
+            cell.AddWater(2f);
+            cell.SetSun(1f);
+        }
+
+    }
+
+    public void OnDroughtTriggered()
+    {
+        Debug.Log("drought happens");
+        foreach (Cell cell in GroundCells.Values)
+        {
+            cell.AddWater(-3f);
+            cell.SetSun(2f);
+        }
+
+    }
 }
 
 public class Cell
@@ -195,4 +218,8 @@ public class Cell
     {
         return string.Format("Water: {0}\nSun: {1}", waterLevel, sunLevel);
     }
+
+    // WeatherEvents
+    
+
 }

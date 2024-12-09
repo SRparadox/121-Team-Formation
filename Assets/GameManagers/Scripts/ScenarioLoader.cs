@@ -2,16 +2,20 @@ using UnityEngine;
 
 public class ScenarioLoader : MonoBehaviour
 {
+    // files that should be affected 
+
+
+    // Scenario Info
     [System.Serializable]
     public class Scenario
     {
         public string ScenarioName;
-        public Event[] WeatherEvents;
+        public WeatherEvent[] WeatherEvents;
         public VictoryCondition VictoryCondition;
     }
 
     [System.Serializable]
-    public class Event
+    public class WeatherEvent
     {
         public int Turn;
         public string EventType;
@@ -30,12 +34,16 @@ public class ScenarioLoader : MonoBehaviour
         Scenario scenario = JsonUtility.FromJson<Scenario>(jsonFile.text);
 
         // testing !!!
-        Debug.Log($"Loaded Scenario: {scenario.ScenarioName}");
+        /*Debug.Log($"Loaded Scenario: {scenario.ScenarioName}");
         Debug.Log($"Victory Condition: {scenario.VictoryCondition.Harvest}");
-        foreach (Event e in scenario.WeatherEvents)
+        foreach (WeatherEvent e in scenario.WeatherEvents)
         {
             Debug.Log($"on Turn {e.Turn} trigger {e.EventType}");
-        }
-        // still have to implement this functionality in the actual game
+        }*/
+
+        // actual functionality
+        UIManager.Instance.SetWinCondition(scenario.VictoryCondition.Harvest);
+        TurnManager.SetLevelEvents(scenario.WeatherEvents);
+
     }
 }

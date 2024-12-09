@@ -6,14 +6,23 @@ using UnityEngine.Tilemaps;
 public class Map : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField] Vector2 waterPerTurn = new Vector2(0f, 1f);
-    [SerializeField] Vector2 sunValues = new Vector2(1f, 2f);
+    [SerializeField]
+    Vector2 waterPerTurn = new Vector2(0f, 1f);
+
+    [SerializeField]
+    Vector2 sunValues = new Vector2(1f, 2f);
 
     private Grid grid;
-    [SerializeField] Tilemap tilledTilemap;
-    [SerializeField] Tilemap groundTilemap;
-    [SerializeField] Tilemap hillTilemap;
-    
+
+    [SerializeField]
+    Tilemap tilledTilemap;
+
+    [SerializeField]
+    Tilemap groundTilemap;
+
+    [SerializeField]
+    Tilemap hillTilemap;
+
     public Dictionary<Vector3Int, Cell> TilledCells;
     public Dictionary<Vector3Int, Cell> GroundCells;
 
@@ -114,12 +123,12 @@ public class Map : MonoBehaviour
     public List<Vector3Int> GetNeighbors(Vector3Int position)
     {
         return new List<Vector3Int>
-    {
-        position + new Vector3Int(1, 0, 0),
-        position + new Vector3Int(-1, 0, 0),
-        position + new Vector3Int(0, 1, 0),
-        position + new Vector3Int(0, -1, 0)
-    };
+        {
+            position + new Vector3Int(1, 0, 0),
+            position + new Vector3Int(-1, 0, 0),
+            position + new Vector3Int(0, 1, 0),
+            position + new Vector3Int(0, -1, 0),
+        };
     }
 
     public bool CreateTile(Vector3Int coord)
@@ -163,7 +172,6 @@ public class Map : MonoBehaviour
             cell.AddWater(2f);
             cell.SetSun(1f);
         }
-
     }
 
     public void OnDroughtTriggered()
@@ -174,7 +182,6 @@ public class Map : MonoBehaviour
             cell.AddWater(-3f);
             cell.SetSun(2f);
         }
-
     }
 }
 
@@ -220,6 +227,4 @@ public class Cell
     }
 
     // WeatherEvents
-    
-
 }

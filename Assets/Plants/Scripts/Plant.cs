@@ -5,8 +5,11 @@ using UnityEngine.Events;
 
 public class Plant : MonoBehaviour
 {
-    [SerializeField] public PlantData plantData;
-    [SerializeField] Map map;
+    [SerializeField]
+    public PlantData plantData;
+
+    [SerializeField]
+    Map map;
 
     private int currentStage;
     private Cell cell;
@@ -32,7 +35,7 @@ public class Plant : MonoBehaviour
         {
             plant = this,
             cell = cell,
-            neighborCells = GetNeighborCells()
+            neighborCells = GetNeighborCells(),
         };
 
         if (plantData.CanGrow(context))

@@ -1,29 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
     [Header("General UI Elements")]
-    [SerializeField] public TextMeshProUGUI harvestedText;
-    [SerializeField] public TextMeshProUGUI dayDisplay;
+    [SerializeField]
+    public TextMeshProUGUI harvestedText;
+
+    [SerializeField]
+    public TextMeshProUGUI dayDisplay;
 
     [Header("Current Cell Elements")]
-    [SerializeField] public Canvas CurrentCell;
-    [SerializeField] public TextMeshProUGUI currentCellPlant;
-    [SerializeField] public TextMeshProUGUI currentCellSun;
-    [SerializeField] public TextMeshProUGUI currentCellWater;
+    [SerializeField]
+    public Canvas CurrentCell;
 
-    [Header ("GameOver Elements")]
-    [SerializeField] public Canvas GameOverPanel;
-    [SerializeField] public TextMeshProUGUI scoreDisplay;
-    [SerializeField] public TextMeshProUGUI resultsDisplay;
+    [SerializeField]
+    public TextMeshProUGUI currentCellPlant;
+
+    [SerializeField]
+    public TextMeshProUGUI currentCellSun;
+
+    [SerializeField]
+    public TextMeshProUGUI currentCellWater;
+
+    [Header("GameOver Elements")]
+    [SerializeField]
+    public Canvas GameOverPanel;
+
+    [SerializeField]
+    public TextMeshProUGUI scoreDisplay;
+
+    [SerializeField]
+    public TextMeshProUGUI resultsDisplay;
 
     int WIN_CONDITION = 10;
-
 
     private int harvested = 0;
     private int currentDay = 0;
@@ -50,7 +64,6 @@ public class UIManager : MonoBehaviour
     {
         currentDay = day;
         dayDisplay.text = $"Day: {currentDay}";
-
     }
 
     public void UpdateCurrentCell(Cell cell)
@@ -71,20 +84,18 @@ public class UIManager : MonoBehaviour
             currentPlant = plant.GetName();
         }
         currentCellPlant.text = $"Plant: {currentPlant}";
-        
     }
+
     public void UpdateSun(float sunlvl)
     {
         currentSun = Mathf.Round(sunlvl * 100f) / 100f;
         currentCellSun.text = $"Sun: LVL {currentSun:f2}";
-
     }
 
     public void UpdateWater(float waterlvl)
     {
         currentWater = Mathf.Round(waterlvl * 100f) / 100f;
         currentCellWater.text = $"Water: LVL {currentWater:F2}";
-
     }
 
     public void EnableGameOverUI(int score)
@@ -96,18 +107,15 @@ public class UIManager : MonoBehaviour
         if (score > WIN_CONDITION)
         {
             scoreDisplay.text = "A Great Harvest!! You Won !!!";
-            
         }
         else
         {
             resultsDisplay.text = "A Poor Harvest. You lost !!!";
         }
-
     }
 
     public void SetWinCondition(int score)
     {
         WIN_CONDITION = 5;
     }
-
 }

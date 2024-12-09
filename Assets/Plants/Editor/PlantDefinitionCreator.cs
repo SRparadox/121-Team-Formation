@@ -16,7 +16,7 @@ public static class PlantDefinitionCreator
         // - cabbage, carrot, cauliflower, cucumber, eggplant, flower,
         // lettuce, parsnip, pumpkin, starfruit, tomato, turnip, wheat
 
-        // Sprite Storage 
+        // Sprite Storage
         var cabbageSprites = new List<Sprite>
         {
             GetSpriteByName(allSprites, "cabbage_0"),
@@ -158,7 +158,7 @@ public static class PlantDefinitionCreator
             .Build("Assets/Resources/Plants/Wheat.asset");
 
         // Cucumber Definition
-        // Cucumber only needs lots of sun and water. It is valid next to any type of plant. 
+        // Cucumber only needs lots of sun and water. It is valid next to any type of plant.
         new PlantDSL()
             .Name("Cucumber")
             .MinimumWater(10f)
@@ -166,13 +166,9 @@ public static class PlantDefinitionCreator
             .PreferredNeighbors("Wheat, Parsnip, Cucumber, Lettuce")
             .Sprites(cucumberSprites)
             .Build("Assets/Resources/Plants/Cucumber.asset");
-        
+
         Debug.Log("Plant definitions created!");
-
-
     }
-
-
 
     // get sprites by name from the loaded sprite array
     private static Sprite GetSpriteByName(Sprite[] allSprites, string name)

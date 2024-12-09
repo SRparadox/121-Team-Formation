@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ScenarioLoader : MonoBehaviour
 {
-    // files that should be affected 
+    // files that should be affected
 
 
     // Scenario Info
@@ -44,6 +44,5 @@ public class ScenarioLoader : MonoBehaviour
         // actual functionality
         UIManager.Instance.SetWinCondition(scenario.VictoryCondition.Harvest);
         TurnManager.SetLevelEvents(scenario.WeatherEvents);
-
     }
 }

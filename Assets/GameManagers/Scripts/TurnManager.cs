@@ -10,13 +10,14 @@ public class TurnManager : MonoBehaviour
     private static int currentTurn = 0;
 
     // list of events
-    private static ScenarioLoader.WeatherEvent[] plannedEvents; 
+    private static ScenarioLoader.WeatherEvent[] plannedEvents;
 
     // Attach a function to this action to run when there's a new turn
     public static UnityAction NewTurn;
     public static UnityAction EndGame;
 
-    [SerializeField] Map map;
+    [SerializeField]
+    Map map;
 
     // Start is called before the first frame update
     void Awake()
@@ -83,5 +84,4 @@ public class TurnManager : MonoBehaviour
             Debug.Log($"Event '{plannedEvent.EventType}' triggered with no specific handler.");
         }
     }
-
 }

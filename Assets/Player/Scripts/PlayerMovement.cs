@@ -1,25 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Object References")]
-    [SerializeField] Map map;
-    [SerializeField] GameObject plantPrefab;
-    [SerializeField] List<PlantData> plantDatas;
+    [SerializeField]
+    Map map;
+
+    [SerializeField]
+    GameObject plantPrefab;
+
+    [SerializeField]
+    List<PlantData> plantDatas;
     private Rigidbody2D rb;
 
-    private enum MovementType { Grid, Free };
+    private enum MovementType
+    {
+        Grid,
+        Free,
+    };
+
     [Header("Movement Settings")]
-    [SerializeField] private MovementType type;
+    [SerializeField]
+    private MovementType type;
 
     [Header("Parameters")]
-    [SerializeField] private float maxSpeed = 3f;
-    [SerializeField] private bool doLerpSmoothing = false;
-    [SerializeField] private float lerpFactor = 5f;
+    [SerializeField]
+    private float maxSpeed = 3f;
+
+    [SerializeField]
+    private bool doLerpSmoothing = false;
+
+    [SerializeField]
+    private float lerpFactor = 5f;
 
     private Vector2 _inputDir;
     private Vector3Int _targetCell;
@@ -73,8 +89,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _inputDir = new Vector2(
             Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical"))
-            .normalized;
+            Input.GetAxisRaw("Vertical")
+        ).normalized;
     }
 
     private void UpdateMove()
@@ -86,27 +102,27 @@ public class PlayerMovement : MonoBehaviour
 
         if (type == MovementType.Free)
         {
-            rb.velocity = doLerpSmoothing ?
-                Vector2.Lerp(rb.velocity, _inputDir * maxSpeed, lerpFactor * Time.deltaTime)
+            rb.velocity = doLerpSmoothing
+                ? Vector2.Lerp(rb.velocity, _inputDir * maxSpeed, lerpFactor * Time.deltaTime)
                 : rb.velocity = _inputDir * maxSpeed;
             return;
         }
 
         if (IsMoving())
         {
-            _speed = doLerpSmoothing ?
-                Mathf.Lerp(_speed, maxSpeed, lerpFactor * Time.deltaTime)
+            _speed = doLerpSmoothing
+                ? Mathf.Lerp(_speed, maxSpeed, lerpFactor * Time.deltaTime)
                 : maxSpeed;
 
             transform.position = Vector3.MoveTowards(
-                transform.position, _targetPos,
-                _speed * Time.deltaTime);
+                transform.position,
+                _targetPos,
+                _speed * Time.deltaTime
+            );
         }
         else
         {
-            _speed = doLerpSmoothing ?
-                Mathf.Lerp(_speed, 0f, lerpFactor * Time.deltaTime)
-                : 0f;
+            _speed = doLerpSmoothing ? Mathf.Lerp(_speed, 0f, lerpFactor * Time.deltaTime) : 0f;
 
             HandleGridInputs();
         }
@@ -159,8 +175,7 @@ public class PlayerMovement : MonoBehaviour
         if (direction.magnitude > 1f)
         {
             // Prioritize the other axis
-            direction *= Mathf.Abs(_prevDirection.x) > DEADZONE ?
-                Vector3Int.up : Vector3Int.right;
+            direction *= Mathf.Abs(_prevDirection.x) > DEADZONE ? Vector3Int.up : Vector3Int.right;
         }
 
         MoveTarget(direction);
@@ -173,7 +188,12 @@ public class PlayerMovement : MonoBehaviour
         if (map.TilledCells.ContainsKey(_targetCell) && map.GetCell(_targetCell).GetPlant() == null)
         {
             // Instantiate the plant at the target position
-            Plant newPlant = Instantiate(plantPrefab, map.CellCoordToPos(_targetCell), Quaternion.identity).GetComponent<Plant>();
+            Plant newPlant = Instantiate(
+                    plantPrefab,
+                    map.CellCoordToPos(_targetCell),
+                    Quaternion.identity
+                )
+                .GetComponent<Plant>();
             PlantData randomPlantData = plantDatas[Random.Range(0, plantDatas.Count)]; // right now a random plant type is selected. might change this logic
             newPlant.Initialize(map.GetCell(_targetCell), map, randomPlantData);
 

@@ -11,10 +11,10 @@ public class PlantDSL
         plantData = ScriptableObject.CreateInstance<PlantData>();
 
         // Initialize fields to defaults
-        plantData.minSun = 0;  
-        plantData.minWater = 0;  
-        plantData.minTotalNeighbors = 0;  
-        plantData.minSpecificNeighbors = 0; 
+        plantData.minSun = 0;
+        plantData.minWater = 0;
+        plantData.minTotalNeighbors = 0;
+        plantData.minSpecificNeighbors = 0;
 
         // Initialize lists to empty
         plantData.preferredNeighborPlants = new List<string>();
@@ -60,13 +60,13 @@ public class PlantDSL
 
     public PlantDSL MinimumTotalNeighbors(int? total)
     {
-        plantData.minTotalNeighbors = total ?? 0; 
+        plantData.minTotalNeighbors = total ?? 0;
         return this;
     }
 
     public PlantDSL MinimumSpecificNeighbors(int? total)
     {
-        plantData.minSpecificNeighbors = total ?? 0; 
+        plantData.minSpecificNeighbors = total ?? 0;
         return this;
     }
 
